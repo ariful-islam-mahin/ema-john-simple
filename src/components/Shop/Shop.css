@@ -1,8 +1,8 @@
-.shop-container{
+.twin-container{
     display: flex;
 }
 .product-container{
-    width: 70%;;
+    width: 70%;
     margin:0px 5px 0px 20px ;
     border-right: 1px solid lightgray;
 }
