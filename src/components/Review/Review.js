@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { getDatabaseCart, removeFromDatabaseCart, processOrder } from '../../utilities/databaseManager';
-import fakeData from '../../fakeData';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import '../Shop/Shop.css'
 import Cart from '../Cart/Cart';
@@ -26,20 +25,23 @@ const Review = () => {
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const cartProducts = productKeys.map(key => {
-            const product = fakeData.find(pd => pd.key === key);
-            product.quantity = savedCart[key];
-            return product
-        });
-        setCart(cartProducts);
+        
+        fetch('http://localhost:4000/productsByKeys', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productKeys)
+        })
+        .then(res => res.json())
+        .then(data => setCart(data))
     }, []);
 
-    // const thankyou = 
     return (
         <div className="twin-container">
             <div className='product-container'>
                 {
-                    cart.map(pd => <ReviewItem removeProduct={removeProduct} key={pd.key} product={pd}></ReviewItem>)
+                    cart.map((pd, idx) => <ReviewItem removeProduct={removeProduct} key={idx} product={pd}></ReviewItem>)
                 } 
                 {
                     orderPlace && <img src={happyImage} alt=""/>
