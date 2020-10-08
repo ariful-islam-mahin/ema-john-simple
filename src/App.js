@@ -16,6 +16,7 @@ import Login from './components/Login/Login';
 import Shipment from './components/Shipment/Shipment';
 import { createContext } from 'react';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const UserContext = createContext();
 
